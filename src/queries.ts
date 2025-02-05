@@ -2,28 +2,17 @@ import * as yup from 'yup'
 
 const GH_API_URL = 'https://api.github.com'
 
-const createQuery = async <TSchema extends yup.AnySchema>(
-  url: string,
-  schema: TSchema
-) => {
-  const response = await fetch(url)
-  const data = await response.json()
+export const ghSearchUsersQuery = (query: string) => ({
+  queryKey: ['search', 'users', query],
+  queryFn: async () => {
+    const response = await fetch(`${GH_API_URL}/search/users?q=${query}`, {
+      headers: { Accept: 'application/vnd.github+json' },
+    })
+    const data = await response.json()
 
-  return schema.validateSync(data)
-}
-
-export const queries = {
-  search: {
-    users: (query: string) => ({
-      queryKey: ['search', 'users', query],
-      queryFn: () =>
-        createQuery(
-          `${GH_API_URL}/search/users?q=${query}`,
-          githubSearchResponseSchema
-        ),
-    }),
+    return githubSearchResponseSchema.validateSync(data)
   },
-}
+})
 
 // schemas
 const githubUserSchema = yup.object({

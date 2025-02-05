@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
-import { queries } from '../queries'
+import { ghSearchUsersQuery } from '../queries'
 import { USERNAME_QUERY_KEY } from './SearchBox'
 
 export const ProfilesList = () => {
@@ -17,7 +17,7 @@ export const ProfilesList = () => {
   const query = searchParams.get(USERNAME_QUERY_KEY) ?? ''
 
   const profilesRequest = useQuery({
-    ...queries.search.users(query),
+    ...ghSearchUsersQuery(query),
     enabled: typeof query === 'string' && query.length > 0,
   })
 
