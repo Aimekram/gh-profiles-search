@@ -8,6 +8,7 @@ import {
 } from '@mui/material'
 import CssBaseline from '@mui/material/CssBaseline'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ProfilesList } from './components/ProfilesList'
 import { SearchBox } from './components/SearchBox'
 
@@ -64,6 +65,7 @@ const App = () => {
             <ProfilesList />
           </Container>
         </ThemeProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </BrowserRouter>
   )
