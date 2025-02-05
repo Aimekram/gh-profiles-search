@@ -3,7 +3,7 @@ import { QueryFunctionContext } from '@tanstack/react-query'
 
 const GH_API_URL = 'https://api.github.com'
 const INITIAL_PAGE = 1
-const PER_PAGE = 5
+const PER_PAGE = 12
 
 type GithubSearchResponse = yup.InferType<typeof githubSearchResponseSchema>
 
