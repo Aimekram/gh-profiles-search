@@ -61,7 +61,7 @@ export const ProfilesList = () => {
           <SkeletonCards />
         </Box>
       }
-      threshold={10}
+      threshold={100}
     >
       <List
         disablePadding
