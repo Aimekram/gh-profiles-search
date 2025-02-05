@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import {
   Alert,
   Card,
+  CardActionArea,
   CardContent,
   CardMedia,
   List,
@@ -67,14 +68,23 @@ export const ProfilesList = () => {
         {profiles.map((profile) => (
           <ListItem key={profile.id} disablePadding>
             <Card sx={{ width: '100%' }}>
-              <CardMedia
-                sx={{ height: 140 }}
-                image={profile.avatar_url}
-                title={profile.login}
-              />
-              <CardContent>
-                <Typography variant="h6">{profile.login}</Typography>
-              </CardContent>
+              <CardActionArea
+                component="a"
+                href={profile.html_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View ${profile.login}'s GitHub profile`}
+              >
+                <CardMedia
+                  sx={{ height: 140 }}
+                  image={profile.avatar_url}
+                  aria-label={`${profile.login}'s GitHub avatar`}
+                  role="img"
+                />
+                <CardContent>
+                  <Typography variant="h6">{profile.login}</Typography>
+                </CardContent>
+              </CardActionArea>
             </Card>
           </ListItem>
         ))}
