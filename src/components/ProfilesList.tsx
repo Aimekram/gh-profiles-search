@@ -99,6 +99,7 @@ export const ProfilesList = () => {
 
 const SkeletonCards = ({ cardsCount = 4 }) => (
   <List
+    disablePadding
     sx={{
       display: 'grid',
       gridTemplateColumns: {
