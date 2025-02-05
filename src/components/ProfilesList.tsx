@@ -24,6 +24,10 @@ export const ProfilesList = () => {
     enabled: typeof query === 'string' && query.length > 0,
   })
 
+  if (query.length === 0) {
+    return null
+  }
+
   if (profilesRequest.isLoading) {
     return <SkeletonCards cardsCount={12} />
   }
