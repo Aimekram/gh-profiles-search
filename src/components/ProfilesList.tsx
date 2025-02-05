@@ -55,7 +55,7 @@ export const ProfilesList = () => {
     <InfiniteScroll
       loadMore={() => profilesRequest.fetchNextPage()}
       hasMore={profilesRequest.hasNextPage}
-      loader={<SkeletonCards />}
+      loader={<SkeletonCards key={0} />}
     >
       <List
         disablePadding
