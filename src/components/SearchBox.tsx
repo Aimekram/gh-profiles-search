@@ -10,7 +10,7 @@ export const USERNAME_QUERY_KEY = 'username'
 const searchSchema = yup.object({
   username: yup.string().matches(
     /(^$|^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$)/i, // allow empty to clear the search
-    'Username must contain only letters, numbers, and hyphens (no consecutive hyphens), up to 39 chars'
+    'GH usernames contain only letters, numbers, and hyphens (no consecutive hyphens), up to 39 chars'
   ),
 })
 
@@ -30,6 +30,7 @@ export const SearchBox = () => {
     defaultValues: {
       username: initialUsername,
     },
+    mode: 'onChange',
   })
 
   const onSubmit: SubmitHandler<SearchFormValues> = useCallback(
@@ -60,6 +61,7 @@ export const SearchBox = () => {
         {...register('username')}
         error={Boolean(errors?.username)}
         helperText={errors?.username?.message}
+        slotProps={{ htmlInput: { 'data-testid': 'username-input' } }}
       />
     </Box>
   )
