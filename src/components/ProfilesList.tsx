@@ -2,6 +2,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 import { useSearchParams } from 'react-router-dom'
 import {
   Alert,
+  Box,
   Card,
   CardActionArea,
   CardContent,
@@ -55,7 +56,12 @@ export const ProfilesList = () => {
     <InfiniteScroll
       loadMore={() => profilesRequest.fetchNextPage()}
       hasMore={profilesRequest.hasNextPage}
-      loader={<SkeletonCards key={0} />}
+      loader={
+        <Box key={0} pt={2}>
+          <SkeletonCards />
+        </Box>
+      }
+      threshold={10}
     >
       <List
         disablePadding
@@ -97,7 +103,7 @@ export const ProfilesList = () => {
   )
 }
 
-const SkeletonCards = ({ cardsCount = 4 }) => (
+const SkeletonCards = ({ cardsCount = 8 }) => (
   <List
     disablePadding
     sx={{
