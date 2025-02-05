@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router-dom'
 import {
   Alert,
   Card,
@@ -9,12 +10,12 @@ import {
 } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '../queries'
+import { USERNAME_QUERY_KEY } from './SearchBox'
 
-type ProfilesListProps = {
-  query: string
-}
+export const ProfilesList = () => {
+  const [searchParams] = useSearchParams()
+  const query = searchParams.get(USERNAME_QUERY_KEY) ?? ''
 
-export const ProfilesList = ({ query }: ProfilesListProps) => {
   const profilesRequest = useQuery({
     ...queries.search.users(query),
     enabled: typeof query === 'string' && query.length > 0,
@@ -28,6 +29,14 @@ export const ProfilesList = ({ query }: ProfilesListProps) => {
     return (
       <Alert severity="error">
         Couldn't get profiles list, please refresh and try again
+      </Alert>
+    )
+  }
+
+  if (profilesRequest.data?.items.length === 0) {
+    return (
+      <Alert severity="info">
+        No matching profiles found, try different username
       </Alert>
     )
   }
