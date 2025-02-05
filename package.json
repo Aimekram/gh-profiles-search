@@ -17,9 +17,11 @@
     "@mui/icons-material": "^6.4.2",
     "@mui/material": "^6.4.2",
     "@tanstack/react-query": "^5.66.0",
+    "@types/react-infinite-scroller": "^1.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.2",
+    "react-infinite-scroller": "^1.2.6",
     "react-router-dom": "^7.1.5",
     "yup": "^1.6.1"
   },
