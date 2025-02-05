@@ -31,7 +31,7 @@ const queryClient = new QueryClient()
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/gh-profiles-search">
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
