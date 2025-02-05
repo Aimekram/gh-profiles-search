@@ -7,6 +7,7 @@ import {
   CardMedia,
   List,
   ListItem,
+  Skeleton,
   Typography,
 } from '@mui/material'
 import { useInfiniteQuery } from '@tanstack/react-query'
@@ -23,7 +24,7 @@ export const ProfilesList = () => {
   })
 
   if (profilesRequest.isLoading) {
-    return <div>Loading...</div>
+    return <SkeletonCards cardsCount={12} />
   }
 
   if (profilesRequest.isError) {
@@ -49,11 +50,22 @@ export const ProfilesList = () => {
     <InfiniteScroll
       loadMore={() => profilesRequest.fetchNextPage()}
       hasMore={profilesRequest.hasNextPage}
-      loader={<div key={0}>Loading more...</div>}
+      loader={<SkeletonCards />}
     >
-      <List sx={{ display: 'flex', flexWrap: 'wrap' }}>
+      <List
+        disablePadding
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(4, 1fr)',
+          },
+          gap: 2,
+        }}
+      >
         {profiles.map((profile) => (
-          <ListItem key={profile.id} sx={{ flexBasis: 250 }}>
+          <ListItem key={profile.id} disablePadding>
             <Card sx={{ width: '100%' }}>
               <CardMedia
                 sx={{ height: 140 }}
@@ -70,3 +82,31 @@ export const ProfilesList = () => {
     </InfiniteScroll>
   )
 }
+
+const SkeletonCards = ({ cardsCount = 4 }) => (
+  <List
+    sx={{
+      display: 'grid',
+      gridTemplateColumns: {
+        xs: '1fr',
+        sm: 'repeat(2, 1fr)',
+        md: 'repeat(4, 1fr)',
+      },
+      gap: 2,
+    }}
+  >
+    {Array.from(new Array(cardsCount)).map((_, index) => (
+      <ListItem key={index} disablePadding>
+        <Card sx={{ width: '100%' }}>
+          <Skeleton variant="rectangular" sx={{ height: 140 }} />
+          <CardContent>
+            <Skeleton
+              variant="text"
+              sx={{ fontSize: '1.25rem', width: '60%' }}
+            />
+          </CardContent>
+        </Card>
+      </ListItem>
+    ))}
+  </List>
+)

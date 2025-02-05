@@ -47,7 +47,8 @@ export const SearchBox = () => {
 
   // triggger search 2s after user stops typing
   useEffect(() => {
-    if (usernameWatch === initialUsername) {
+    if (usernameWatch === initialUsername || errors?.username) {
+      setShowSearchBtnAnimation(false)
       return
     }
 
@@ -59,14 +60,15 @@ export const SearchBox = () => {
     }, 2000)
 
     return () => clearTimeout(timer)
-  }, [usernameWatch, handleSubmit, onSubmit, initialUsername])
+  }, [usernameWatch, handleSubmit, onSubmit, initialUsername, errors?.username])
 
   return (
     <Stack
       component="form"
       onSubmit={handleSubmit(onSubmit)}
-      direction="row"
+      direction={{ xs: 'column', sm: 'row' }}
       spacing={1}
+      sx={{ my: 4, alignItems: 'flex-start' }}
     >
       <TextField
         autoFocus
@@ -83,7 +85,8 @@ export const SearchBox = () => {
         disabled={Boolean(errors?.username)}
         variant="contained"
         sx={(theme) => ({
-          minWidth: 120,
+          width: { xs: '100%', sm: 120 },
+          minHeight: { xs: 42, sm: 56 },
           px: 2,
           backgroundColor: theme.palette.primary.main,
           background: showSearchBtnAnimation
@@ -99,12 +102,8 @@ export const SearchBox = () => {
             ? 'searchProgress 2s linear forwards'
             : 'none',
           '@keyframes searchProgress': {
-            '0%': {
-              backgroundPosition: '100% 0%',
-            },
-            '100%': {
-              backgroundPosition: '0% 0%',
-            },
+            '0%': { backgroundPosition: '100% 0%' },
+            '100%': { backgroundPosition: '0% 0%' },
           },
         })}
       >
