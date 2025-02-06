@@ -16,11 +16,12 @@ A React application to search GitHub profiles using the GitHub API, built with V
 - Tanstack Query
 - Material-UI
 - ESLint
+- React Testing Library with Jest
 
 ## Setup
 
 ```bash
-git clone https://github.com/your-username/gh-profiles-search.git
+git clone https://github.com/Aimekram/gh-profiles-search.git
 cd gh-profiles-search
 npm install
 ```
@@ -29,6 +30,20 @@ Start the dev server:
 
 ```bash
 npm run dev
+```
+
+## Testing
+
+Run the test suite:
+
+```bash
+npm test
+```
+
+Run tests in watch mode:
+
+```bash
+npm test:watch
 ```
 
 ## Usage
