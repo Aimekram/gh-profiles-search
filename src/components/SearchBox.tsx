@@ -5,6 +5,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import SearchIcon from '@mui/icons-material/Search'
 import { Button, Stack, TextField } from '@mui/material'
+import { withQueryValue } from '../utils/withQueryValue'
 
 export const USERNAME_QUERY_KEY = 'username'
 
@@ -17,11 +18,13 @@ const searchSchema = yup.object({
 
 type SearchFormValues = yup.InferType<typeof searchSchema>
 
-export const SearchBox = () => {
-  const [showSearchBtnAnimation, setShowSearchBtnAnimation] = useState(false)
-  const [searchParams, setSearchParams] = useSearchParams()
+type SearchBoxProps = {
+  query: string
+}
 
-  const initialUsername = searchParams.get(USERNAME_QUERY_KEY) ?? ''
+const SearchBoxBase = ({ query }: SearchBoxProps) => {
+  const [showSearchBtnAnimation, setShowSearchBtnAnimation] = useState(false)
+  const [_, setSearchParams] = useSearchParams()
 
   const {
     register,
@@ -31,7 +34,7 @@ export const SearchBox = () => {
   } = useForm({
     resolver: yupResolver(searchSchema),
     defaultValues: {
-      username: initialUsername,
+      username: query,
     },
     mode: 'onChange',
   })
@@ -47,7 +50,7 @@ export const SearchBox = () => {
 
   // triggger search 2s after user stops typing
   useEffect(() => {
-    if (usernameWatch === initialUsername || errors?.username) {
+    if (usernameWatch === query || errors?.username) {
       setShowSearchBtnAnimation(false)
       return
     }
@@ -60,7 +63,7 @@ export const SearchBox = () => {
     }, 2000)
 
     return () => clearTimeout(timer)
-  }, [usernameWatch, handleSubmit, onSubmit, initialUsername, errors?.username])
+  }, [usernameWatch, handleSubmit, onSubmit, query, errors?.username])
 
   return (
     <Stack
@@ -112,3 +115,5 @@ export const SearchBox = () => {
     </Stack>
   )
 }
+
+export const SearchBox = withQueryValue(SearchBoxBase)
